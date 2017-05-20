@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="mod">
+<head>
+    <meta charset="UTF-8">
+    <title>angular的练习</title>.
+    <link rel="stylesheet" href="bootstrap3/css/bootstrap.min.css">
+    <script src="angular/angular.js"></script>
+    <script src="app/index.js"></script>
+</head>
+<body>
+    <div ng-controller="ctrl" class="container">
+        <table class="table" ng-show="cart.length">
+            <thead>
+                <tr>
+                    <th>产品编号</th>
+                    <th>产品名字</th>
+                    <th>购买数量</th>
+                    <th>产品单价</th>
+                    <th>产品总价</th>
+                    <th>操作</th>  
+                </tr> 
+            </thead>
+            <tbody>
+                 <tr ng-repeat="item in cart">
+                <!-- 
+                    item 表示循环每一个元素
+                    cart 表示在index.js $scope.scart
+                -->
+                    <td>
+                        {{item.id}}
+                    </td>
+                    <td>
+                        {{item.name}}
+                    </td>
+                    <td>
+                        <button type="button" ng-click="reduce(item.id)" class="btn btn-primary">-</button>
+                        <input type="text" value="{{item.quantity}}" ng-model="item.quantity" />
+                        <button type="button" ng-click="add(item.id)" class="btn btn-primary">+</button>
+                    </td>
+                    <td>
+                        {{item.price}}
+                    </td>
+                    <td>
+                        {{item.price * item.quantity}}
+                        <!--
+                            用数量乘以单价就是总价
+                        -->
+                    </td>
+                    <td>
+                        <button type="button" ng-click="remove(item.id)" class="btn btn-danger">移除</button>
+                    <!--
+                    给移除按钮加一个点击事件 item.id是一个形参对应着js里的remove
+                    在angular里的ng-什么什么的时候会自动触发angular里的脏检查
+                    -->
+                    </td>
+                </tr>
+            <tr>
+                <td>
+                    总购买价
+                </td>
+                <td>
+                    {{totalPrice()}}
+                </td>
+                <td>
+                    总共买数量
+                </td>
+                <td>
+                    {{totalQuantity()}}
+                </td>
+                <td colspan="2"><!-- 合并单元格 -->
+                    <button type="button" class="btn btn-danger" ng-click="cart = {}">清空购物车</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+        <p ng-show="!cart.length">您的购物车为空！</p>
+    </div>
+
+</body>
+</html>
